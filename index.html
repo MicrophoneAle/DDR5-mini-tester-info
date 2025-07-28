@@ -1,68 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Company Notice</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Company Notice</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #003f5c, #2f4b7c, #665191, #a05195, #d45087);
+    font-family: 'Cinzel', serif;
+    color: #e0f7fa;
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    animation: fadeIn 2s ease-out;
+  }
+
+  h1 {
+    font-size: 5rem;
+    max-width: 90vw;
+    text-shadow:
+      0 2px 6px rgba(0, 0, 0, 0.5),
+      0 0 20px #9ae9f8,
+      0 0 30px #71c9f8,
+      0 0 40px #41a6f8;
+    z-index: 10;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
     }
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(180deg, #003f5c, #2f4b7c, #665191, #a05195, #d45087);
-      color: #e0f7fa;
-      font-family: 'Playfair Display', serif;
-      text-align: center;
-      padding: 2rem;
-      animation: fadeIn 2s ease-out;
+    100% {
+      opacity: 1;
+      transform: translateY(0);
     }
-    h1 {
-      font-size: 3.5rem;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.4);
-      max-width: 90vw;
+  }
+
+  /* Bubbles */
+  .bubble {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    animation: floatUp linear infinite;
+    filter: drop-shadow(0 0 2px #a0d8ef);
+  }
+  @keyframes floatUp {
+    0% {
+      bottom: -100px;
+      opacity: 0;
     }
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    50% {
+      opacity: 0.3;
     }
-    .bubble {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 50%;
-      animation: floatUp 10s infinite ease-in;
+    100% {
+      bottom: 110%;
+      opacity: 0;
     }
-    @keyframes floatUp {
-      0% {
-        bottom: -100px;
-        opacity: 0;
-      }
-      50% {
-        opacity: 0.3;
-      }
-      100% {
-        bottom: 110%;
-        opacity: 0;
-      }
-    }
-  </style>
+  }
+
+  /* Seaweed */
+  .seaweed {
+    position: absolute;
+    bottom: 0;
+    width: 20px;
+    height: 80px;
+    background: linear-gradient(180deg, #0f9b0f, #064d06);
+    border-radius: 10px 10px 0 0;
+    animation: sway 3s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 3px #0b650b);
+  }
+  .seaweed:nth-child(odd) {
+    animation-duration: 4s;
+  }
+  .seaweed::before,
+  .seaweed::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: inherit;
+    width: 15px;
+    height: 40px;
+    top: 0;
+  }
+  .seaweed::before {
+    left: -12px;
+    transform-origin: bottom right;
+    animation: swaySide 3s ease-in-out infinite alternate;
+    animation-delay: 0.5s;
+  }
+  .seaweed::after {
+    right: -12px;
+    transform-origin: bottom left;
+    animation: swaySide 3.5s ease-in-out infinite alternate;
+    animation-delay: 1s;
+  }
+  @keyframes sway {
+    0% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+  }
+  @keyframes swaySide {
+    0% { transform: rotate(10deg); }
+    100% { transform: rotate(-10deg); }
+  }
+
+  /* Fish */
+  .fish {
+    position: absolute;
+    width: 50px;
+    height: 20px;
+    background: linear-gradient(90deg, #f9a825 0%, #f57f17 100%);
+    border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+    filter: drop-shadow(0 0 2px #c28500);
+    animation-timing-function: linear;
+  }
+  .fish::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 5px;
+    width: 15px;
+    height: 10px;
+    background: #f57f17;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+  .fish:nth-child(odd) {
+    animation-name: swimRight;
+    animation-duration: 15s;
+    bottom: 40%;
+  }
+  .fish:nth-child(even) {
+    animation-name: swimLeft;
+    animation-duration: 12s;
+    bottom: 60%;
+  }
+
+  @keyframes swimRight {
+    0% { left: -60px; transform: scaleX(1); }
+    100% { left: 110%; transform: scaleX(1); }
+  }
+  @keyframes swimLeft {
+    0% { right: -60px; transform: scaleX(-1); }
+    100% { right: 110%; transform: scaleX(-1); }
+  }
+</style>
 </head>
 <body>
   <h1>Cannot divulge company information</h1>
 
   <script>
+    // Bubbles
     for (let i = 0; i < 20; i++) {
       const bubble = document.createElement('div');
       const size = Math.random() * 60 + 20;
@@ -70,7 +169,35 @@
       bubble.style.width = bubble.style.height = `${size}px`;
       bubble.style.left = `${Math.random() * 100}%`;
       bubble.style.animationDuration = `${8 + Math.random() * 4}s`;
+      bubble.style.bottom = `-100px`;
+      bubble.style.opacity = 0;
       document.body.appendChild(bubble);
+    }
+
+    // Seaweed
+    for (let i = 0; i < 10; i++) {
+      const seaweed = document.createElement('div');
+      seaweed.className = 'seaweed';
+      seaweed.style.left = `${i * 10 + 2}%`;
+      seaweed.style.animationDelay = `${Math.random() * 3}s`;
+      seaweed.style.height = `${60 + Math.random() * 60}px`;
+      seaweed.style.bottom = `0`;
+      document.body.appendChild(seaweed);
+    }
+
+    // Fish
+    for (let i = 0; i < 6; i++) {
+      const fish = document.createElement('div');
+      fish.className = 'fish';
+      fish.style.bottom = `${30 + Math.random() * 40}%`;
+      fish.style.animationDuration = `${12 + Math.random() * 8}s`;
+      fish.style.animationDelay = `${-Math.random() * 15}s`;
+      if (i % 2 === 0) {
+        fish.style.left = '-60px';
+      } else {
+        fish.style.right = '-60px';
+      }
+      document.body.appendChild(fish);
     }
   </script>
 </body>
