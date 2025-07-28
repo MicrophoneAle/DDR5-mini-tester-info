@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Company Notice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(180deg, #003f5c, #2f4b7c, #665191, #a05195, #d45087);
+      color: #e0f7fa;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      padding: 2rem;
+      animation: fadeIn 2s ease-out;
+    }
+    h1 {
+      font-size: 3.5rem;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      max-width: 90vw;
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .bubble {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      animation: floatUp 10s infinite ease-in;
+    }
+    @keyframes floatUp {
+      0% {
+        bottom: -100px;
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        bottom: 110%;
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Cannot divulge company information</h1>
+
+  <script>
+    for (let i = 0; i < 20; i++) {
+      const bubble = document.createElement('div');
+      const size = Math.random() * 60 + 20;
+      bubble.className = 'bubble';
+      bubble.style.width = bubble.style.height = `${size}px`;
+      bubble.style.left = `${Math.random() * 100}%`;
+      bubble.style.animationDuration = `${8 + Math.random() * 4}s`;
+      document.body.appendChild(bubble);
+    }
+  </script>
+</body>
+</html>
