@@ -131,12 +131,59 @@
       50% { transform: rotate(5deg) scaleY(1.1); opacity: 0.25; }
     }
 
+    .seaweed {
+      position: absolute;
+      bottom: 0;
+      width: 20px;
+      background: linear-gradient(180deg, #0f9b0f, #064d06);
+      border-radius: 10px 10px 0 0;
+      filter: drop-shadow(0 0 3px #0b650b);
+      animation: swayWave 4s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+      z-index: 5;
+    }
+    .seaweed:nth-child(odd) {
+      animation-duration: 5s;
+    }
+    .seaweed::before,
+    .seaweed::after {
+      content: '';
+      position: absolute;
+      background: inherit;
+      border-radius: inherit;
+      width: 15px;
+      height: 40px;
+      top: 0;
+      animation: swayWaveSide 4s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+      z-index: 5;
+    }
+    .seaweed::before {
+      left: -12px;
+      animation-delay: 0.5s;
+    }
+    .seaweed::after {
+      right: -12px;
+      animation-delay: 1s;
+    }
+
+    @keyframes swayWave {
+      0% { transform: rotate(-8deg) translateY(0); }
+      50% { transform: rotate(6deg) translateY(-5px); }
+      100% { transform: rotate(-8deg) translateY(0); }
+    }
+
+    @keyframes swayWaveSide {
+      0% { transform: rotate(10deg) translateY(0); }
+      50% { transform: rotate(-10deg) translateY(-4px); }
+      100% { transform: rotate(10deg) translateY(0); }
+    }
+
     .fish {
       position: absolute;
       filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
       animation-timing-function: linear;
       mix-blend-mode: screen;
-      top: 0;
     }
 
     .fish::before {
@@ -223,6 +270,16 @@
       return Math.random() * (max - min) + min;
     }
 
+    // Add seaweed to bottom at different horizontal positions
+    for (let i = 0; i < 10; i++) {
+      const seaweed = document.createElement('div');
+      seaweed.className = 'seaweed';
+      seaweed.style.left = `${i * 10 + 3}%`;
+      seaweed.style.height = `${60 + Math.random() * 60}px`;
+      seaweed.style.animationDelay = `${Math.random() * 3}s`;
+      document.body.appendChild(seaweed);
+    }
+
     const fishTypes = ['goldfish', 'blueTang', 'clownfish'];
     const fishCount = 4;
     const fishes = [];
@@ -232,7 +289,6 @@
       fish.classList.add('fish');
       fish.classList.add(fishTypes[index % fishTypes.length]);
       fish.style.position = 'absolute';
-      fish.style.top = '0';
 
       fish.addEventListener('animationend', () => {
         respawnFish(fish);
@@ -256,7 +312,8 @@
       const scale = randRange(0.5, 1.5);
       fish.style.transform = `scale(${scale})`;
 
-      const bottomPercent = randRange(25, 75);
+      // Random vertical position from ~10% to ~80% of viewport height
+      const bottomPercent = randRange(10, 80);
       fish.style.bottom = `${bottomPercent}%`;
 
       const duration = randRange(12, 20);
