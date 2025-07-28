@@ -58,26 +58,28 @@ h1 {
 @keyframes swayBeam { 0%,100%{transform:rotate(0deg) scaleY(1); opacity:0.4;} 50%{transform:rotate(5deg) scaleY(1.1); opacity:0.25;} }
 
 .seaweed {
-  position: absolute; bottom: 0;
-  width: 20px;
+  position: absolute;
+  bottom: 0;
+  width: 14px;
+  height: 80px;
   background: linear-gradient(180deg, #0f9b0f, #064d06);
-  border-radius:10px 10px 0 0;
+  border-radius: 8px 8px 0 0;
   filter: drop-shadow(0 0 3px #0b650b);
   animation: swayWave 4s ease-in-out infinite alternate;
   transform-origin: bottom center;
-  z-index: 5;
+  z-index: 4;
 }
-.seaweed:nth-child(odd) { animation-duration:5s; }
-.seaweed::before, .seaweed::after {
-  content: ''; position: absolute; background: inherit;
-  border-radius:inherit; width:15px; height:40px;
-  top:0; animation: swayWaveSide 4s ease-in-out infinite alternate;
-  transform-origin: bottom center; z-index:5;
+.seaweed:nth-child(odd) {
+  animation-duration: 5s;
+  width: 10px;
+  background: linear-gradient(180deg, #0ca70c, #025202);
 }
-.seaweed::before { left:-12px; animation-delay:0.5s; }
-.seaweed::after { right:-12px; animation-delay:1s; }
-@keyframes swayWave { 0%{transform:rotate(-8deg) translateY(0);}50%{transform:rotate(6deg) translateY(-5px);}100%{transform:rotate(-8deg) translateY(0);} }
-@keyframes swayWaveSide { 0%{transform:rotate(10deg)translateY(0);}50%{transform:rotate(-10deg)translateY(-4px);}100%{transform:rotate(10deg)translateY(0);} }
+@keyframes swayWave {
+  0% { transform: rotate(-6deg) translateY(0); }
+  50% { transform: rotate(5deg) translateY(-5px); }
+  100% { transform: rotate(-6deg) translateY(0); }
+}
+
 .fish {
   position: absolute;
   filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
@@ -86,38 +88,91 @@ h1 {
   border-radius: 50%/60%;
 }
 .fish::before {
-  content: ''; position: absolute; top:50%;
+  content: '';
+  position: absolute;
+  top: 50%;
   transform: translateY(-50%);
   clip-path: polygon(0 0,100% 50%,0 100%);
 }
 .fish-face {
-  position: absolute; top:50%; left:50%;
-  width:18px; height:12px; transform:translate(-50%,-50%);
-  pointer-events:none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
-.eye { position: absolute; top:40%; width:3px; height:3px; background:black; border-radius:50%; }
-.eye.left { left:25%; } .eye.right { right:25%; }
-.mouth { position: absolute; bottom:25%; left:50%; width:8px; height:4px;
-  border-bottom:2px solid black; border-radius:0 0 10px 10px;
-  transform:translateX(-50%);
+.eye {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  border: 1px solid black;
+  overflow: hidden;
 }
-.fish.goldfish { width:50px; height:30px;
+.eye::after {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 4px;
+  background: black;
+  border-radius: 50%;
+  margin: 2px auto;
+  animation: lookAround 2s infinite alternate;
+}
+.eye.left { left: 2px; top: 2px; }
+.eye.right { right: 2px; top: 2px; }
+@keyframes lookAround {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(2px); }
+}
+.mouth {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  width: 8px;
+  height: 4px;
+  border-bottom: 2px solid black;
+  border-radius: 0 0 10px 10px;
+  transform: translateX(-50%);
+}
+.fish.goldfish {
+  width: 50px;
+  height: 30px;
   background: linear-gradient(90deg,#f9a825 0%,#f57f17 100%);
 }
-.fish.goldfish::before { width:15px; height:15px; left:-15px;
-  background:#f57f17; border-radius:50%/60%;
+.fish.goldfish::before {
+  width: 15px;
+  height: 15px;
+  left: -15px;
+  background: #f57f17;
+  border-radius: 50%/60%;
 }
-.fish.blueTang { width:45px; height:28px;
+.fish.blueTang {
+  width: 45px;
+  height: 28px;
   background: linear-gradient(90deg,#0077be 0%,#004d6b 100%);
 }
-.fish.blueTang::before { width:14px; height:14px; left:-14px;
-  background:#004d6b; border-radius:50%/60%;
+.fish.blueTang::before {
+  width: 14px;
+  height: 14px;
+  left: -14px;
+  background: #004d6b;
+  border-radius: 50%/60%;
 }
-.fish.clownfish { width:48px; height:28px;
+.fish.clownfish {
+  width: 48px;
+  height: 28px;
   background: repeating-linear-gradient(90deg,#ff6f61 0 10%,white 10% 20%);
 }
-.fish.clownfish::before { width:15px; height:14px; left:-15px;
-  background:#e44d3a; border-radius:50%/60%;
+.fish.clownfish::before {
+  width: 15px;
+  height: 14px;
+  left: -15px;
+  background: #e44d3a;
+  border-radius: 50%/60%;
 }
 @keyframes swimRight {
   0% { left:-60px; transform:scaleX(1); }
@@ -145,7 +200,7 @@ function createFish(){
   fish.classList.add('fish');
   const face=document.createElement('div');
   face.className='fish-face';
-  face.innerHTML='<div class="eye left"></div><div class="eye right"></div><div class="mouth"></div>';
+  face.innerHTML='<div class=\"eye left\"></div><div class=\"eye right\"></div><div class=\"mouth\"></div>';
   fish.appendChild(face);
   fish.addEventListener('animationend',()=>respawnFish(fish));
   document.body.appendChild(fish);
@@ -171,6 +226,14 @@ function respawnFish(fish){
 for(let i=0;i<fishCount;i++){
   const f=createFish();
   respawnFish(f);
+}
+for (let i = 0; i < 15; i++) {
+  const seaweed = document.createElement('div');
+  seaweed.className = 'seaweed';
+  seaweed.style.left = `${Math.random() * 100}%`;
+  seaweed.style.height = `${60 + Math.random() * 40}px`;
+  seaweed.style.animationDelay = `${Math.random() * 3}s`;
+  document.body.appendChild(seaweed);
 }
 </script>
 </body>
