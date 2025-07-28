@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -213,13 +213,11 @@
     /* Fish base style */
     .fish {
       position: absolute;
-      width: 50px;
-      height: 20px;
-      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
       filter: drop-shadow(0 0 2px rgba(0,0,0,0.2));
       animation-timing-function: linear;
       mix-blend-mode: screen;
     }
+
     .fish::before {
       content: '';
       position: absolute;
@@ -230,6 +228,8 @@
 
     /* Fish variants */
     .fish.goldfish {
+      width: 50px;
+      height: 25px;
       background: linear-gradient(90deg, #f9a825 0%, #f57f17 100%);
       animation-duration: 15s;
     }
@@ -242,7 +242,7 @@
 
     .fish.blueTang {
       width: 40px;
-      height: 25px;
+      height: 30px;
       background: linear-gradient(90deg, #0077be 0%, #004d6b 100%);
       animation-duration: 18s;
     }
@@ -261,6 +261,7 @@
           90deg,
           #ff6f61 0 10%,
           white 10% 20%
+       
         );
       animation-duration: 13s;
     }
@@ -342,19 +343,28 @@
 
     // Fish: Multiple types and swimming directions
     const fishTypes = ['goldfish', 'blueTang', 'clownfish'];
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 12; i++) {
       const fish = document.createElement('div');
       fish.className = 'fish ' + fishTypes[i % fishTypes.length];
       const swimClass = i % 2 === 0 ? 'swimRight' : 'swimLeft';
       fish.classList.add(swimClass);
-      fish.style.bottom = `${25 + Math.random() * 50}%`;
-      fish.style.animationDuration = `${12 + Math.random() * 8}s`;
+      
+      const randomSize = Math.random() * (1.5 - 0.5) + 0.5; // Randomize fish size
+      fish.style.transform = `scale(${randomSize})`;
+
+      const fishSpeed = 12 + Math.random() * 8;
+      fish.style.animationDuration = `${fishSpeed}s`;
       fish.style.animationDelay = `${-Math.random() * 15}s`;
+
+      // Randomize fish position outside of the screen
       if (swimClass === 'swimRight') {
-        fish.style.left = '-60px';
+        fish.style.left = `-${50 + Math.random() * 200}px`; // Spawn fish outside the left side
       } else {
-        fish.style.right = '-60px';
+        fish.style.right = `-${50 + Math.random() * 200}px`; // Spawn fish outside the right side
       }
+
+      fish.style.bottom = `${25 + Math.random() * 50}%`;
+
       document.body.appendChild(fish);
     }
   </script>
